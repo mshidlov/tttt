@@ -17,7 +17,7 @@ import { BlaBlaList } from "./blaBla/BlaBlaList";
 import { BlaBlaCreate } from "./blaBla/BlaBlaCreate";
 import { BlaBlaEdit } from "./blaBla/BlaBlaEdit";
 import { BlaBlaShow } from "./blaBla/BlaBlaShow";
-import { jwtAuthProvider } from "./auth-provider/ra-auth-jwt";
+import { httpAuthProvider } from "./auth-provider/ra-auth-http";
 
 const App = (): React.ReactElement => {
   const [dataProvider, setDataProvider] = useState<DataProvider | null>(null);
@@ -38,7 +38,7 @@ const App = (): React.ReactElement => {
       <Admin
         title={"My app-1"}
         dataProvider={dataProvider}
-        authProvider={jwtAuthProvider}
+        authProvider={httpAuthProvider}
         theme={theme}
         dashboard={Dashboard}
         loginPage={Login}

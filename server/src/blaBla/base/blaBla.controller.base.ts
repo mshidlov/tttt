@@ -15,7 +15,7 @@ import { BlaBlaWhereUniqueInput } from "./BlaBlaWhereUniqueInput";
 import { BlaBlaFindManyArgs } from "./BlaBlaFindManyArgs";
 import { BlaBlaUpdateInput } from "./BlaBlaUpdateInput";
 import { BlaBla } from "./BlaBla";
-@swagger.ApiBearerAuth()
+@swagger.ApiBasicAuth()
 export class BlaBlaControllerBase {
   constructor(
     protected readonly service: BlaBlaService,
