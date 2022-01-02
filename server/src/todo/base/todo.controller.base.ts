@@ -15,7 +15,7 @@ import { TodoWhereUniqueInput } from "./TodoWhereUniqueInput";
 import { TodoFindManyArgs } from "./TodoFindManyArgs";
 import { TodoUpdateInput } from "./TodoUpdateInput";
 import { Todo } from "./Todo";
-@swagger.ApiBearerAuth()
+@swagger.ApiBasicAuth()
 export class TodoControllerBase {
   constructor(
     protected readonly service: TodoService,
