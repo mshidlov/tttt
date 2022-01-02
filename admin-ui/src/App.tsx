@@ -9,10 +9,6 @@ import { UserList } from "./user/UserList";
 import { UserCreate } from "./user/UserCreate";
 import { UserEdit } from "./user/UserEdit";
 import { UserShow } from "./user/UserShow";
-import { TodoList } from "./todo/TodoList";
-import { TodoCreate } from "./todo/TodoCreate";
-import { TodoEdit } from "./todo/TodoEdit";
-import { TodoShow } from "./todo/TodoShow";
 import { BlaBlaList } from "./blaBla/BlaBlaList";
 import { BlaBlaCreate } from "./blaBla/BlaBlaCreate";
 import { BlaBlaEdit } from "./blaBla/BlaBlaEdit";
@@ -49,13 +45,6 @@ const App = (): React.ReactElement => {
           edit={UserEdit}
           create={UserCreate}
           show={UserShow}
-        />
-        <Resource
-          name="Todo"
-          list={TodoList}
-          edit={TodoEdit}
-          create={TodoCreate}
-          show={TodoShow}
         />
         <Resource
           name="BlaBla"
