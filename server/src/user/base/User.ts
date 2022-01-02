@@ -1,7 +1,8 @@
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsDate, IsOptional } from "class-validator";
+import { IsString, IsDate, IsOptional, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
+import { Tata } from "../../tata/base/Tata";
 @ObjectType()
 class User {
   @ApiProperty({
@@ -67,5 +68,14 @@ class User {
   })
   @Field(() => [String])
   roles!: Array<string>;
+
+  @ApiProperty({
+    required: false,
+    type: () => Tata,
+  })
+  @ValidateNested()
+  @Type(() => Tata)
+  @IsOptional()
+  tata?: Tata | null;
 }
 export { User };

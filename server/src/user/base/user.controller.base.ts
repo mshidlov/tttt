@@ -58,7 +58,15 @@ export class UserControllerBase {
       );
     }
     return await this.service.create({
-      data: data,
+      data: {
+        ...data,
+
+        tata: data.tata
+          ? {
+              connect: data.tata,
+            }
+          : undefined,
+      },
       select: {
         id: true,
         createdAt: true,
@@ -67,6 +75,12 @@ export class UserControllerBase {
         lastName: true,
         username: true,
         roles: true,
+
+        tata: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
   }
@@ -111,6 +125,12 @@ export class UserControllerBase {
         lastName: true,
         username: true,
         roles: true,
+
+        tata: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
     return results.map((result) => permission.filter(result));
@@ -150,6 +170,12 @@ export class UserControllerBase {
         lastName: true,
         username: true,
         roles: true,
+
+        tata: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
     if (result === null) {
@@ -201,7 +227,15 @@ export class UserControllerBase {
     try {
       return await this.service.update({
         where: params,
-        data: data,
+        data: {
+          ...data,
+
+          tata: data.tata
+            ? {
+                connect: data.tata,
+              }
+            : undefined,
+        },
         select: {
           id: true,
           createdAt: true,
@@ -210,6 +244,12 @@ export class UserControllerBase {
           lastName: true,
           username: true,
           roles: true,
+
+          tata: {
+            select: {
+              id: true,
+            },
+          },
         },
       });
     } catch (error) {
@@ -250,6 +290,12 @@ export class UserControllerBase {
           lastName: true,
           username: true,
           roles: true,
+
+          tata: {
+            select: {
+              id: true,
+            },
+          },
         },
       });
     } catch (error) {

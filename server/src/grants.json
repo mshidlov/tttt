@@ -2,12 +2,6 @@
   {
     "role": "user",
     "resource": "User",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
-    "resource": "User",
     "action": "create:any",
     "attributes": "*"
   },
@@ -15,6 +9,12 @@
     "role": "user",
     "resource": "User",
     "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "User",
+    "action": "read:own",
     "attributes": "*"
   },
   {
@@ -31,61 +31,61 @@
   },
   {
     "role": "user",
-    "resource": "Todo",
+    "resource": "BlaBla",
     "action": "read:own",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Todo",
+    "resource": "BlaBla",
     "action": "create:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Todo",
+    "resource": "BlaBla",
     "action": "update:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Todo",
+    "resource": "BlaBla",
     "action": "delete:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "Todo",
+    "resource": "BlaBla",
     "action": "read:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "BlaBla",
+    "resource": "Tata",
     "action": "read:own",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "BlaBla",
+    "resource": "Tata",
     "action": "create:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "BlaBla",
+    "resource": "Tata",
     "action": "update:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "BlaBla",
+    "resource": "Tata",
     "action": "delete:any",
     "attributes": "*"
   },
   {
     "role": "user",
-    "resource": "BlaBla",
+    "resource": "Tata",
     "action": "read:any",
     "attributes": "*"
   }

@@ -12,6 +12,8 @@ import { DeleteBlaBlaArgs } from "./DeleteBlaBlaArgs";
 import { BlaBlaFindManyArgs } from "./BlaBlaFindManyArgs";
 import { BlaBlaFindUniqueArgs } from "./BlaBlaFindUniqueArgs";
 import { BlaBla } from "./BlaBla";
+import { TataFindManyArgs } from "../../tata/base/TataFindManyArgs";
+import { Tata } from "../../tata/base/Tata";
 import { BlaBlaService } from "../blaBla.service";
 
 @graphql.Resolver(() => BlaBla)
@@ -104,5 +106,31 @@ export class BlaBlaResolverBase {
       }
       throw error;
     }
+  }
+
+  @graphql.ResolveField(() => [Tata])
+  @nestAccessControl.UseRoles({
+    resource: "BlaBla",
+    action: "read",
+    possession: "any",
+  })
+  async tatas(
+    @graphql.Parent() parent: BlaBla,
+    @graphql.Args() args: TataFindManyArgs,
+    @gqlUserRoles.UserRoles() userRoles: string[]
+  ): Promise<Tata[]> {
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "Tata",
+    });
+    const results = await this.service.findTatas(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results.map((result) => permission.filter(result));
   }
 }

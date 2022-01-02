@@ -1,3 +1,5 @@
+import { Tata } from "../tata/Tata";
+
 export type User = {
   id: string;
   createdAt: Date;
@@ -6,4 +8,5 @@ export type User = {
   lastName: string | null;
   username: string;
   roles: Array<string>;
+  tata?: Tata | null;
 };

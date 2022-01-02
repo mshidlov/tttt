@@ -14,6 +14,7 @@ import { DeleteUserArgs } from "./DeleteUserArgs";
 import { UserFindManyArgs } from "./UserFindManyArgs";
 import { UserFindUniqueArgs } from "./UserFindUniqueArgs";
 import { User } from "./User";
+import { Tata } from "../../tata/base/Tata";
 import { UserService } from "../user.service";
 
 @graphql.Resolver(() => User)
@@ -120,7 +121,15 @@ export class UserResolverBase {
     // @ts-ignore
     return await this.service.create({
       ...args,
-      data: args.data,
+      data: {
+        ...args.data,
+
+        tata: args.data.tata
+          ? {
+              connect: args.data.tata,
+            }
+          : undefined,
+      },
     });
   }
 
@@ -159,7 +168,15 @@ export class UserResolverBase {
       // @ts-ignore
       return await this.service.update({
         ...args,
-        data: args.data,
+        data: {
+          ...args.data,
+
+          tata: args.data.tata
+            ? {
+                connect: args.data.tata,
+              }
+            : undefined,
+        },
       });
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -189,5 +206,29 @@ export class UserResolverBase {
       }
       throw error;
     }
+  }
+
+  @graphql.ResolveField(() => Tata, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "read",
+    possession: "any",
+  })
+  async tata(
+    @graphql.Parent() parent: User,
+    @gqlUserRoles.UserRoles() userRoles: string[]
+  ): Promise<Tata | null> {
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "Tata",
+    });
+    const result = await this.service.getTata(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return permission.filter(result);
   }
 }

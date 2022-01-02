@@ -16,16 +16,22 @@ model User {
   username  String   @unique
   password  String
   roles     String[]
-}
-
-model Todo {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  tata      Tata?    @relation(fields: [tataId], references: [id])
+  tataId    String?
 }
 
 model BlaBla {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  tatas     Tata[]
+}
+
+model Tata {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  todo      BlaBla?  @relation(fields: [todoId], references: [id])
+  todoId    String?
+  users     User[]
 }
