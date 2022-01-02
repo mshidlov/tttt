@@ -1,10 +1,10 @@
 import { Module } from "@nestjs/common";
 import { UserModule } from "./user/user.module";
-import { TodoModule } from "./todo/todo.module";
 import { BlaBlaModule } from "./blaBla/blaBla.module";
+import { TataModule } from "./tata/tata.module";
+import { HealthModule } from "./health/health.module";
 import { ACLModule } from "./auth/acl.module";
 import { AuthModule } from "./auth/auth.module";
-import { HealthModule } from "./health/health.module";
 import { SecretsManagerModule } from "./providers/secrets/secretsManager.module";
 import { MorganModule } from "nest-morgan";
 import { ConfigModule, ConfigService } from "@nestjs/config";
@@ -16,11 +16,11 @@ import { GraphQLModule } from "@nestjs/graphql";
   controllers: [],
   imports: [
     UserModule,
-    TodoModule,
     BlaBlaModule,
+    TataModule,
+    HealthModule,
     ACLModule,
     AuthModule,
-    HealthModule,
     SecretsManagerModule,
     MorganModule,
     ConfigModule.forRoot({ isGlobal: true }),

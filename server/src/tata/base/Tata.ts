@@ -2,9 +2,9 @@ import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsString, IsDate, ValidateNested, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
-import { Tata } from "../../tata/base/Tata";
+import { BlaBla } from "../../blaBla/base/BlaBla";
 @ObjectType()
-class BlaBla {
+class Tata {
   @ApiProperty({
     required: true,
     type: String,
@@ -31,11 +31,11 @@ class BlaBla {
 
   @ApiProperty({
     required: false,
-    type: () => [Tata],
+    type: () => BlaBla,
   })
   @ValidateNested()
-  @Type(() => Tata)
+  @Type(() => BlaBla)
   @IsOptional()
-  tatas?: Array<Tata>;
+  todo?: BlaBla | null;
 }
-export { BlaBla };
+export { Tata };
