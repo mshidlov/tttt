@@ -1,0 +1,2 @@
+class BlaBlaCreateInput {}
+export { BlaBlaCreateInput };
