@@ -32,12 +32,6 @@
   {
     "role": "user",
     "resource": "BlaBla",
-    "action": "read:own",
-    "attributes": "*"
-  },
-  {
-    "role": "user",
-    "resource": "BlaBla",
     "action": "create:any",
     "attributes": "*"
   },
@@ -45,6 +39,12 @@
     "role": "user",
     "resource": "BlaBla",
     "action": "update:any",
+    "attributes": "*"
+  },
+  {
+    "role": "user",
+    "resource": "BlaBla",
+    "action": "read:own",
     "attributes": "*"
   },
   {
