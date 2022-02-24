@@ -19,10 +19,14 @@ import * as gqlUserRoles from "../../auth/gqlUserRoles.decorator";
 import * as abacUtil from "../../auth/abac.util";
 import { isRecordNotFoundError } from "../../prisma.util";
 import { MetaQueryPayload } from "../../util/MetaQueryPayload";
+import { CreateBlaBlaArgs } from "./CreateBlaBlaArgs";
+import { UpdateBlaBlaArgs } from "./UpdateBlaBlaArgs";
 import { DeleteBlaBlaArgs } from "./DeleteBlaBlaArgs";
 import { BlaBlaFindManyArgs } from "./BlaBlaFindManyArgs";
 import { BlaBlaFindUniqueArgs } from "./BlaBlaFindUniqueArgs";
 import { BlaBla } from "./BlaBla";
+import { UserFindManyArgs } from "../../user/base/UserFindManyArgs";
+import { User } from "../../user/base/User";
 import { BlaBlaService } from "../blaBla.service";
 
 @graphql.Resolver(() => BlaBla)
@@ -98,6 +102,91 @@ export class BlaBlaResolverBase {
   @graphql.Mutation(() => BlaBla)
   @nestAccessControl.UseRoles({
     resource: "BlaBla",
+    action: "create",
+    possession: "any",
+  })
+  async createBlaBla(
+    @graphql.Args() args: CreateBlaBlaArgs,
+    @gqlUserRoles.UserRoles() userRoles: string[]
+  ): Promise<BlaBla> {
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "create",
+      possession: "any",
+      resource: "BlaBla",
+    });
+    const invalidAttributes = abacUtil.getInvalidAttributes(
+      permission,
+      args.data
+    );
+    if (invalidAttributes.length) {
+      const properties = invalidAttributes
+        .map((attribute: string) => JSON.stringify(attribute))
+        .join(", ");
+      const roles = userRoles
+        .map((role: string) => JSON.stringify(role))
+        .join(",");
+      throw new apollo.ApolloError(
+        `providing the properties: ${properties} on ${"BlaBla"} creation is forbidden for roles: ${roles}`
+      );
+    }
+    // @ts-ignore
+    return await this.service.create({
+      ...args,
+      data: args.data,
+    });
+  }
+
+  @graphql.Mutation(() => BlaBla)
+  @nestAccessControl.UseRoles({
+    resource: "BlaBla",
+    action: "update",
+    possession: "any",
+  })
+  async updateBlaBla(
+    @graphql.Args() args: UpdateBlaBlaArgs,
+    @gqlUserRoles.UserRoles() userRoles: string[]
+  ): Promise<BlaBla | null> {
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "update",
+      possession: "any",
+      resource: "BlaBla",
+    });
+    const invalidAttributes = abacUtil.getInvalidAttributes(
+      permission,
+      args.data
+    );
+    if (invalidAttributes.length) {
+      const properties = invalidAttributes
+        .map((attribute: string) => JSON.stringify(attribute))
+        .join(", ");
+      const roles = userRoles
+        .map((role: string) => JSON.stringify(role))
+        .join(",");
+      throw new apollo.ApolloError(
+        `providing the properties: ${properties} on ${"BlaBla"} update is forbidden for roles: ${roles}`
+      );
+    }
+    try {
+      // @ts-ignore
+      return await this.service.update({
+        ...args,
+        data: args.data,
+      });
+    } catch (error) {
+      if (isRecordNotFoundError(error)) {
+        throw new apollo.ApolloError(
+          `No resource was found for ${JSON.stringify(args.where)}`
+        );
+      }
+      throw error;
+    }
+  }
+
+  @graphql.Mutation(() => BlaBla)
+  @nestAccessControl.UseRoles({
+    resource: "BlaBla",
     action: "delete",
     possession: "any",
   })
@@ -115,5 +204,31 @@ export class BlaBlaResolverBase {
       }
       throw error;
     }
+  }
+
+  @graphql.ResolveField(() => [User])
+  @nestAccessControl.UseRoles({
+    resource: "BlaBla",
+    action: "read",
+    possession: "any",
+  })
+  async users(
+    @graphql.Parent() parent: BlaBla,
+    @graphql.Args() args: UserFindManyArgs,
+    @gqlUserRoles.UserRoles() userRoles: string[]
+  ): Promise<User[]> {
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "User",
+    });
+    const results = await this.service.findUsers(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results.map((result) => permission.filter(result));
   }
 }

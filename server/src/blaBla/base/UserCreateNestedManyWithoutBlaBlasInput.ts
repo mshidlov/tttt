@@ -10,22 +10,17 @@ https://docs.amplication.com/docs/how-to/custom-code
 ------------------------------------------------------------------------------
   */
 import { InputType, Field } from "@nestjs/graphql";
+import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 import { ApiProperty } from "@nestjs/swagger";
-import { UserCreateNestedManyWithoutBlaBlasInput } from "./UserCreateNestedManyWithoutBlaBlasInput";
-import { ValidateNested, IsOptional } from "class-validator";
-import { Type } from "class-transformer";
 @InputType()
-class BlaBlaCreateInput {
-  @ApiProperty({
-    required: false,
-    type: () => UserCreateNestedManyWithoutBlaBlasInput,
-  })
-  @ValidateNested()
-  @Type(() => UserCreateNestedManyWithoutBlaBlasInput)
-  @IsOptional()
-  @Field(() => UserCreateNestedManyWithoutBlaBlasInput, {
+class UserCreateNestedManyWithoutBlaBlasInput {
+  @Field(() => [UserWhereUniqueInput], {
     nullable: true,
   })
-  users?: UserCreateNestedManyWithoutBlaBlasInput;
+  @ApiProperty({
+    required: false,
+    type: () => [UserWhereUniqueInput],
+  })
+  connect?: Array<UserWhereUniqueInput>;
 }
-export { BlaBlaCreateInput };
+export { UserCreateNestedManyWithoutBlaBlasInput };
