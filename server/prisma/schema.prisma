@@ -16,10 +16,12 @@ model User {
   username  String   @unique
   password  String
   roles     String[]
+  blaBlas   BlaBla[]
 }
 
 model BlaBla {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  users     User[]
 }

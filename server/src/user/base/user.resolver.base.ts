@@ -25,6 +25,8 @@ import { DeleteUserArgs } from "./DeleteUserArgs";
 import { UserFindManyArgs } from "./UserFindManyArgs";
 import { UserFindUniqueArgs } from "./UserFindUniqueArgs";
 import { User } from "./User";
+import { BlaBlaFindManyArgs } from "../../blaBla/base/BlaBlaFindManyArgs";
+import { BlaBla } from "../../blaBla/base/BlaBla";
 import { UserService } from "../user.service";
 
 @graphql.Resolver(() => User)
@@ -200,5 +202,31 @@ export class UserResolverBase {
       }
       throw error;
     }
+  }
+
+  @graphql.ResolveField(() => [BlaBla])
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "read",
+    possession: "any",
+  })
+  async blaBlas(
+    @graphql.Parent() parent: User,
+    @graphql.Args() args: BlaBlaFindManyArgs,
+    @gqlUserRoles.UserRoles() userRoles: string[]
+  ): Promise<BlaBla[]> {
+    const permission = this.rolesBuilder.permission({
+      role: userRoles,
+      action: "read",
+      possession: "any",
+      resource: "BlaBla",
+    });
+    const results = await this.service.findBlaBlas(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results.map((result) => permission.filter(result));
   }
 }

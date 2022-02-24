@@ -1,3 +1,5 @@
+import { BlaBla } from "../blaBla/BlaBla";
+
 export type User = {
   id: string;
   createdAt: Date;
@@ -6,4 +8,5 @@ export type User = {
   lastName: string | null;
   username: string;
   roles: Array<string>;
+  blaBlas?: Array<BlaBla>;
 };
