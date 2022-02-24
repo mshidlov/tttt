@@ -11,64 +11,46 @@ https://docs.amplication.com/docs/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional } from "class-validator";
+import { BlaBlaWhereInput } from "./BlaBlaWhereInput";
+import { ValidateNested, IsOptional } from "class-validator";
+import { Type } from "class-transformer";
+
 @InputType()
-class UserUpdateInput {
+class BlaBlaListRelationFilter {
   @ApiProperty({
     required: false,
-    type: String,
+    type: () => BlaBlaWhereInput,
   })
-  @IsString()
+  @ValidateNested()
+  @Type(() => BlaBlaWhereInput)
   @IsOptional()
-  @Field(() => String, {
+  @Field(() => BlaBlaWhereInput, {
     nullable: true,
   })
-  firstName?: string | null;
+  every?: BlaBlaWhereInput;
 
   @ApiProperty({
     required: false,
-    type: String,
+    type: () => BlaBlaWhereInput,
   })
-  @IsString()
+  @ValidateNested()
+  @Type(() => BlaBlaWhereInput)
   @IsOptional()
-  @Field(() => String, {
+  @Field(() => BlaBlaWhereInput, {
     nullable: true,
   })
-  lastName?: string | null;
+  some?: BlaBlaWhereInput;
 
   @ApiProperty({
     required: false,
-    type: String,
+    type: () => BlaBlaWhereInput,
   })
-  @IsString()
+  @ValidateNested()
+  @Type(() => BlaBlaWhereInput)
   @IsOptional()
-  @Field(() => String, {
+  @Field(() => BlaBlaWhereInput, {
     nullable: true,
   })
-  username?: string;
-
-  @ApiProperty({
-    required: false,
-    type: String,
-  })
-  @IsString()
-  @IsOptional()
-  @Field(() => String, {
-    nullable: true,
-  })
-  password?: string;
-
-  @ApiProperty({
-    required: false,
-    type: [String],
-  })
-  @IsString({
-    each: true,
-  })
-  @IsOptional()
-  @Field(() => [String], {
-    nullable: true,
-  })
-  roles?: Array<string>;
+  none?: BlaBlaWhereInput;
 }
-export { UserUpdateInput };
+export { BlaBlaListRelationFilter };

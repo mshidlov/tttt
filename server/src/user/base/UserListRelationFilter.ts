@@ -9,45 +9,48 @@ https://docs.amplication.com/docs/how-to/custom-code
 
 ------------------------------------------------------------------------------
   */
-import { ArgsType, Field } from "@nestjs/graphql";
+import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { UserWhereInput } from "./UserWhereInput";
+import { ValidateNested, IsOptional } from "class-validator";
 import { Type } from "class-transformer";
-import { UserOrderByInput } from "./UserOrderByInput";
 
-@ArgsType()
-class UserFindManyArgs {
+@InputType()
+class UserListRelationFilter {
   @ApiProperty({
     required: false,
     type: () => UserWhereInput,
   })
-  @Field(() => UserWhereInput, { nullable: true })
+  @ValidateNested()
   @Type(() => UserWhereInput)
-  where?: UserWhereInput;
+  @IsOptional()
+  @Field(() => UserWhereInput, {
+    nullable: true,
+  })
+  every?: UserWhereInput;
 
   @ApiProperty({
     required: false,
-    type: UserOrderByInput,
+    type: () => UserWhereInput,
   })
-  @Field(() => UserOrderByInput, { nullable: true })
-  @Type(() => UserOrderByInput)
-  orderBy?: UserOrderByInput;
+  @ValidateNested()
+  @Type(() => UserWhereInput)
+  @IsOptional()
+  @Field(() => UserWhereInput, {
+    nullable: true,
+  })
+  some?: UserWhereInput;
 
   @ApiProperty({
     required: false,
-    type: Number,
+    type: () => UserWhereInput,
   })
-  @Field(() => Number, { nullable: true })
-  @Type(() => Number)
-  skip?: number;
-
-  @ApiProperty({
-    required: false,
-    type: Number,
+  @ValidateNested()
+  @Type(() => UserWhereInput)
+  @IsOptional()
+  @Field(() => UserWhereInput, {
+    nullable: true,
   })
-  @Field(() => Number, { nullable: true })
-  @Type(() => Number)
-  take?: number;
+  none?: UserWhereInput;
 }
-
-export { UserFindManyArgs };
+export { UserListRelationFilter };
